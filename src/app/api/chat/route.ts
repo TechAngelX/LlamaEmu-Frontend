@@ -1,16 +1,15 @@
 // src/app/api/chat/route.ts
 import { streamText, convertToModelMessages } from 'ai';
+// Import the necessary provider now that it's installed
 import { createOpenAI } from '@ai-sdk/openai';
 
-// Set max duration for Vercel Hobby/Pro plans (optional)
-export const maxDuration = 30;
+export const maxDuration = 60;
 
-// IMPORTANT: This creates an OpenAI client. 
-// For your LlamaEmu, you will eventually replace this with a custom 
-// fetcher to your UCL server or another service like Groq.
-const openai = createOpenAI({
+// CUSTOM API DEFINITION: 
+const customTrainedModel = createOpenAI({
     apiKey: process.env.LLAMA_API_KEY,
-    baseURL: 'https://api.openai.com/v1', // REPLACE with your model endpoint URL
+    // Base URL must be the exact URL of your custom API server (UCL or other)
+    baseURL: process.env.LLAMA_API_URL || "http://your-blahlbha-api:8000/v1",
 });
 
 // Handle the incoming chat request
@@ -19,7 +18,8 @@ export async function POST(req: Request) {
 
     try {
         const result = streamText({
-            model: openai.chat('gpt-3.5-turbo'), // Placeholder model
+            // The model name 'blahlbha-trained-model' is used by your custom client
+            model: customTrainedModel.chat("blahlbha-trained-model"),
             messages: convertToModelMessages(messages),
         });
 
@@ -28,6 +28,7 @@ export async function POST(req: Request) {
 
     } catch (error) {
         console.error("LLM API Error:", error);
-        return new Response(JSON.stringify({ error: "Failed to connect to LLM backend." }), { status: 500 });
+        // Return a generic 500 error to the client
+        return new Response(JSON.stringify({ error: "Failed to connect to LLM backend (blahlbha model)." }), { status: 500 });
     }
 }
