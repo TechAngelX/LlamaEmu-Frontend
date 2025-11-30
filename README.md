@@ -2,8 +2,6 @@
 
 A responsive, production-ready chat interface that seamlessly integrates with any Large Language Model. LLamaEmu is just a plug-and-play UI frontend template. Whether you've trained a model on cooking, customer support, trained your own personal fitness AI bot, or anything else, just connect it and go !
 
-Built with Next.js and Tailwind CSS.
-
 ![LLamaEmu Screenshot](public/readme_images/screenshot1.png)
 
 ## Overview
