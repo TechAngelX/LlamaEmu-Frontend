@@ -3,18 +3,16 @@
 import { useChat } from '@ai-sdk/react';
 import { Send } from 'lucide-react';
 import DarkModeToggle from "./components/DarkModeToggle";
-import { useState } from 'react';
+import { useState } from 'react'; // Ensure useState is imported
+
+// ... rest of the component definition
 
 // --- Responsive Chat Component ---
 export default function LlamaEmuChat() {
-
-    // 1. MODIFIED DESTRUCTURING (Only take stable properties/functions)
+    // ... local state and useChat definitions ...
     const { messages, isLoading, sendMessage } = useChat();
-
-    // 2. LOCAL STATE: Manage the input value manually to avoid SDK type errors
     const [localInput, setLocalInput] = useState('');
 
-    // 3. LOCAL SUBMISSION HANDLER: Wraps the hook's sender function
     const handleLocalSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (localInput.trim()) {
@@ -23,8 +21,8 @@ export default function LlamaEmuChat() {
         }
     };
 
-    return (
-        // The entire component uses localInput for value and trim checks
+    return ( // <--- The return statement begins here
+        // This is the single, root JSX element being returned
         <div className="flex flex-col h-screen p-4 sm:p-6 bg-gray-50 dark:bg-[var(--color-darkbg)]">
 
             {/* Header */}
@@ -72,6 +70,7 @@ export default function LlamaEmuChat() {
             </main>
 
             {/* Input Form (Fixed at Bottom) */}
+            <form onSubmit={handleLocalSubmit} className="pt-4 flex gap-2">
                 <input
                     className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     value={localInput}
@@ -87,6 +86,6 @@ export default function LlamaEmuChat() {
                     <Send size={18} />
                 </button>
             </form>
-        </div>
-    );
+        </div> 
+    ); 
 }
